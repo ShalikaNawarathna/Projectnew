@@ -11,15 +11,23 @@ import { Patient } from 'src/app/appdata/Patient';
   providers : [Methods]
 })
 export class ShowDoctorDetailsComponent implements OnInit {
+  title = 'clock-greets';
+  time:any;
+  hours:any;
+  msg:any;
+  link:any;
+  
   data:any=[];
   patientList:any=[];
   id:string="";
+  
   ward=0;
   patient=0;
   displayImage="";
   doctordata:any=[];
   cancel:boolean=false;
   currentDoctor="";
+  today = new Date().toISOString().slice(0, 10);
   constructor(
     private router:Router,
     private route:ActivatedRoute,
@@ -28,7 +36,39 @@ export class ShowDoctorDetailsComponent implements OnInit {
     private method:Methods,
     private doctor:DoctorService
 
-  ) { }
+
+  ) { 
+    setInterval(() => {
+      this.time = new Date();
+   }, 1000);
+
+   this.decide();
+  }
+  
+  decide() {
+
+    this.hours = new Date().getHours();
+    console.log("this.hours",this.hours)
+    if(this.hours < 10){
+      this.msg = "Good Morning"
+      this.link = "wwww.google.com"
+      console.log("selamat Pagi")
+    }else if(this.hours < 16){
+      this.msg = "Good Afternoon"
+      this.link = "wwww.tokopedia.com"
+      console.log("selamat siang")
+    }else if(this.hours < 19){
+      this.msg = "Good Evening"
+    }else if(this.hours < 24){
+      this.msg = "Good Night"
+      this.link = "wwww.sprout.co.id"
+      console.log("selamat malam")
+    }else if(this.hours < 6){
+      this.msg = "Sleep lah"
+      this.link = "www.mangabat.com"
+      console.log("selamat subuh")
+    }
+  }
 
   ngOnInit(): void {
     setTimeout(() => {
